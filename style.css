@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+
+    /*degault font*/
+    font-family: 'Times New Roman', Times, serif;
+
+    /*debugging*/
+    /*border: 1px solid red;*/
+}
+
+body {
+    height: 100vh;
+    border: solid 2px red;
+}
+
+header {
+    text-align: center;
+    /* border: solid 2px red; */
+}
+
+div {
+    border: solid 2px red;
+}
+main {
+    display: flex;
+    flex-flow: row;
+}
+#search {
+    display: flex;
+    flex-flow: column;
+    max-width: 25%;
+    min-height: 100vh;
+}
+
+#search h2 {
+    margin: 5px;
+}
+textarea {
+    margin: 5px;
+}
+
+#searchBtn {
+    margin: 5px;
+}
+
+main {
+    display: flex column;
+}
+
+#buttons {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-flow: column;
+    list-style: none;
+    text-align: center;
+}
+
+button {
+    margin: 5px;
+}
+
+#display {
+    border: 2px solid black;
+    margin: 5px;
+    display: flex;
+    flex-flow: column;
+    padding-bottom: 25px;
+}
+#display h2{
+    margin-left: 5px;
+    padding-bottom: 20px;
+}
+
+#display p{
+    margin-top: 15px;
+}
+
+#forcast {
+    margin: 5px;
+}
