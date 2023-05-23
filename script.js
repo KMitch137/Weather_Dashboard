@@ -6,6 +6,7 @@ var searchButton = document.getElementById("searchBtn")
 var temperature = document.getElementById("temp");
 var windSpeed = document.getElementById("wind");
 var humidity = document.getElementById("humidity");
+var forcastEL = document.getElementById("forcast");
 
 function getVal() {
     var val = document.querySelector("input").value.trim();
@@ -26,9 +27,9 @@ function getApi() {
         })
         .then(function (data) {
             // console.log(data)
-            let humid = (data.main.humidity)
-            let temp = (data.main.temp)
-            let wind = (data.wind.speed)
+            var humid = (data.main.humidity)
+            var temp = (data.main.temp)
+            var wind = (data.wind.speed)
             temperature.textContent = "Temp: " + temp + " *F"
             windSpeed.textContent = "Wind: " + wind + " MPH"
             humidity.textContent = "humidity " + humid + " %"
@@ -43,27 +44,28 @@ function getApi5Day() {
 
     fetch(requestUrl)
         .then(function (response) {
-            console.log(response)
             return response.json();
 
         })
         .then(function (data) {
             console.log(data)
 
-            for (var i = 0; i < data.list.length; i = i + 8) {
-                console.log(data.list[i].main.humidity)
-                let humid = (data.list[i].main.humidity)
-               
-`<div class="card" style="width: 18rem;">
+            for (var i = 0; i < data.list; i = i + 8) {
+                var humid = (data.list[i].main.humidity)
+                var temp = (data.list[i].main.temp)
+                var wind = (data.list[i].wind.speed)
+
+                forcastEL.appendChild(`<div class="card" style="width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">${Monday}</h5>
+                    <h5 class="card-title">${"Today"}</h5>
+                    <p class="card-text">Temp: ${temp}</p>
                     <p class="card-text">Humidity: ${humid}</p>
+                    <p class="card-text">Wind: ${wind}</p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>`
-
-
+                )
 
             }
 
@@ -73,7 +75,7 @@ function getApi5Day() {
             // let wind = (data.wind.speed)
             // temperature.textContent = "Temp: " + temp + " *F"
             // windSpeed.textContent = "Wind: " + wind + " MPH"
-      
+
         });
 }
 
