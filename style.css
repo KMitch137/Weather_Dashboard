@@ -5,7 +5,7 @@
     color: rgb(0, 0, 0);
 
     /*degault font*/
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Times New Roman', Times, serif; */
 
     /*debugging*/
     /*border: 1px solid red;*/
@@ -19,6 +19,10 @@ body {
 header {
     text-align: center;
     /* border: solid 2px red; */
+}
+
+p {
+    margin-left: 5px;
 }
 
 div {
@@ -38,13 +42,6 @@ main {
 #search h2 {
     margin: 5px;
 }
-textarea {
-    margin: 5px;
-}
-
-#searchBtn {
-    margin: 5px;
-}
 
 main {
     display: flex column;
@@ -59,7 +56,7 @@ main {
     text-align: center;
 }
 
-button {
+button, input {
     margin: 5px;
 }
 
