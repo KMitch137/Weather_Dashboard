@@ -14,9 +14,16 @@ function getVal() {
     return val
 }
 
-function getApi() {
-    var city = getVal()
-    // console.log(city)
+function getApi(previousSearch) {
+    var city = undefined;
+
+    if(!previousSearch && previousSearch !== '') {
+        city = previousSearch;
+    }
+    else {
+        city = getVal();
+    }
+    console.log(city)
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial";
 
     fetch(requestUrl)
@@ -30,15 +37,14 @@ function getApi() {
             var humid = (data.main.humidity)
             var temp = (data.main.temp)
             var wind = (data.wind.speed)
-            temperature.textContent = "Temp: " + temp + " *F"
+            temperature.textContent = "Temp: " + temp + " °F"
             windSpeed.textContent = "Wind: " + wind + " MPH"
             humidity.textContent = "humidity " + humid + " %"
         });
-    getApi5Day()
+    getApi5Day(city);
 }
 
-function getApi5Day() {
-    var city = getVal()
+function getApi5Day(city) {
     // console.log(city)
     var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial`;
 
@@ -50,36 +56,54 @@ function getApi5Day() {
         .then(function (data) {
             console.log(data)
 
-            for (var i = 0; i < data.list; i = i + 8) {
-                var humid = (data.list[i].main.humidity)
-                var temp = (data.list[i].main.temp)
-                var wind = (data.list[i].wind.speed)
+            // Pulls data from each day at noon
+            var generatedForcastCards = "";
+            for (var i = 4; i < data.list.length; i = i + 8) {
 
-                forcastEL.appendChild(`<div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+            var humid = (data.list[i].main.humidity)
+            var temp = (data.list[i].main.temp)
+            var wind = (data.list[i].wind.speed)
+
+            // displays: Tue May 30, 2023
+            var date = dayjs.unix(data.list[i].dt).format("ddd MMM D, YYYY")
+            
+            var forcstCard = `<div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">${"Today"}</h5>
-                    <p class="card-text">Temp: ${temp}</p>
-                    <p class="card-text">Humidity: ${humid}</p>
-                    <p class="card-text">Wind: ${wind}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">${date}</h5>
+                    <p class="card-text">Temp: ${temp}° </p>
+                    <p class="card-text">Humidity: ${humid} %</p>
+                    <p class="card-text">Wind: ${wind} MPH</p>
                 </div>
-            </div>`
-                )
+            </div>`;
 
-            }
+            generatedForcastCards += forcstCard;
+             }
 
+            forcastEL.innerHTML = generatedForcastCards;
 
-            //  humidity.textContent = "humidity " + humid + " %"
-            // let temp = (data.main.temp)
-            // let wind = (data.wind.speed)
-            // temperature.textContent = "Temp: " + temp + " *F"
-            // windSpeed.textContent = "Wind: " + wind + " MPH"
-
-        });
+        })
 }
 
+function createSearchBtn(searchValue) {
+    var Btn = document.createElement("button") 
+    Btn.innerText = searchValue;
+    var previousSearchSection = document.getElementById("buttons")
+    previousSearchSection.append(Btn)
 
+    Btn.addEventListener("click", (e) => {
+        getApi(searchValue);
+    })
 
+}
 
-searchButton.addEventListener("click", getApi)
+// render the buttons when the page loads
+// 
+
+searchButton.addEventListener("click", (e) => {
+    getApi();
+    var value = getVal();
+    createSearchBtn(value);
+    // add to search value to storage
+})
+
+// call render all search buttons 
