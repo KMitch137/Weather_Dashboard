@@ -15,9 +15,9 @@ function getVal() {
 }
 
 function getApi(previousSearch) {
-    var city = "";
+    // var city = "";
 
-    if (!previousSearch && previousSearch !== '') {
+    if (!previousSearch && previousSearch !== "") {
         city = previousSearch;
     }
     else {
@@ -58,7 +58,7 @@ function getApi5Day(city) {
 
             // Pulls data from each day at noon
             var generatedForcastCards = "";
-            for (var i = 4; i < data.list.length; i = i + 8) {
+            for (var i = 0; i < data.list.length; i = i + 8) {
 
                 var humid = (data.list[i].main.humidity)
                 var temp = (data.list[i].main.temp)
