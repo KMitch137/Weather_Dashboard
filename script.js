@@ -9,31 +9,31 @@ var humidity = document.getElementById("humidity");
 var forcastEL = document.getElementById("forcast");
 
 function getVal() {
-    var val = document.querySelector("input").value.trim();
+    var val = document.querySelector("input").value;
     // console.log(val);
     return val
 }
 
 function getApi(previousSearch) {
-    var city = undefined;
+    var city = "";
 
-    if(!previousSearch && previousSearch !== '') {
+    if (!previousSearch && previousSearch !== '') {
         city = previousSearch;
     }
     else {
         city = getVal();
     }
-    console.log(city)
-    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial";
 
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial";
+    console.log(city)
     fetch(requestUrl)
         .then(function (response) {
-            // console.log(response)
+            console.log(response)
             return response.json();
 
         })
         .then(function (data) {
-            // console.log(data)
+            console.log(data)
             var humid = (data.main.humidity)
             var temp = (data.main.temp)
             var wind = (data.wind.speed)
@@ -45,7 +45,7 @@ function getApi(previousSearch) {
 }
 
 function getApi5Day(city) {
-    // console.log(city)
+    console.log(city)
     var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial`;
 
     fetch(requestUrl)
@@ -60,14 +60,14 @@ function getApi5Day(city) {
             var generatedForcastCards = "";
             for (var i = 4; i < data.list.length; i = i + 8) {
 
-            var humid = (data.list[i].main.humidity)
-            var temp = (data.list[i].main.temp)
-            var wind = (data.list[i].wind.speed)
+                var humid = (data.list[i].main.humidity)
+                var temp = (data.list[i].main.temp)
+                var wind = (data.list[i].wind.speed)
 
-            // displays: Tue May 30, 2023
-            var date = dayjs.unix(data.list[i].dt).format("ddd MMM D, YYYY")
-            
-            var forcstCard = `<div class="card" style="width: 18rem;">
+                // displays: Tue May 30, 2023
+                var date = dayjs.unix(data.list[i].dt).format("ddd MMM D, YYYY")
+
+                var forcstCard = `<div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">${date}</h5>
                     <p class="card-text">Temp: ${temp}° </p>
@@ -76,8 +76,8 @@ function getApi5Day(city) {
                 </div>
             </div>`;
 
-            generatedForcastCards += forcstCard;
-             }
+                generatedForcastCards += forcstCard;
+            }
 
             forcastEL.innerHTML = generatedForcastCards;
 
@@ -85,7 +85,7 @@ function getApi5Day(city) {
 }
 
 function createSearchBtn(searchValue) {
-    var Btn = document.createElement("button") 
+    var Btn = document.createElement("button")
     Btn.innerText = searchValue;
     var previousSearchSection = document.getElementById("buttons")
     previousSearchSection.append(Btn)
