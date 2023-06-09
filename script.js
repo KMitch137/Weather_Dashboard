@@ -8,27 +8,15 @@ var windSpeed = document.getElementById("wind");
 var humidity = document.getElementById("humidity");
 var forcastEL = document.getElementById("forcast");
 
-function getVal() {
-    var val = document.querySelector("input").value;
-    // console.log(val);
-    return val
-}
+var getVal = () => document.querySelector("input").value;
 
 function getApi(previousSearch) {
-    // var city = "";
-
-    if (!previousSearch && previousSearch !== "") {
-        city = previousSearch;
-    }
-    else {
-        city = getVal();
-    }
+    var city = previousSearch;
 
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial";
-    console.log(city)
     fetch(requestUrl)
         .then(function (response) {
-            console.log(response)
+
             return response.json();
 
         })
@@ -45,7 +33,6 @@ function getApi(previousSearch) {
 }
 
 function getApi5Day(city) {
-    console.log(city)
     var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=7efd1295c0cc0b1c3b635c92e3821a5d&units=imperial`;
 
     fetch(requestUrl)
@@ -58,7 +45,7 @@ function getApi5Day(city) {
 
             // Pulls data from each day at noon
             var generatedForcastCards = "";
-            for (var i = 0; i < data.list.length; i = i + 8) {
+            for (var i = 4; i < data.list.length; i = i + 8) {
 
                 var humid = (data.list[i].main.humidity)
                 var temp = (data.list[i].main.temp)
@@ -90,7 +77,7 @@ function createSearchBtn(searchValue) {
     var previousSearchSection = document.getElementById("buttons")
     previousSearchSection.append(Btn)
 
-    Btn.addEventListener("click", (e) => {
+    Btn.addEventListener("click", () => {
         getApi(searchValue);
     })
 
@@ -99,9 +86,9 @@ function createSearchBtn(searchValue) {
 // render the buttons when the page loads
 // 
 
-searchButton.addEventListener("click", (e) => {
-    getApi();
+searchButton.addEventListener("click", function (e) {
     var value = getVal();
+    getApi(value);
     createSearchBtn(value);
     // add to search value to storage
 })

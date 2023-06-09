@@ -14,7 +14,7 @@
 body {
     height: 100vh;
     /* border: solid 2px red; */
-    background-color: aqua;
+    background-color: rgb(98, 102, 102);
 }
 
 header {
